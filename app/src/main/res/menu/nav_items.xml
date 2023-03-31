@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/search"
+        android:title="@string/felfedezes"
+        android:icon="@drawable/search_icon" />
+    <item android:id="@+id/favorites"
+        android:title="@string/kedvencek"
+        android:icon="@drawable/favorite_icon" />
+    <item android:id="@+id/trips"
+        android:title="@string/utazasok"
+        android:icon="@drawable/trip_icon" />
+    <item android:id="@+id/profile"
+        android:title="@string/profil"
+        android:icon="@drawable/user_icon" />
+</menu>

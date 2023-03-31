@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/accomodationImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true" />
+        <TextView
+            android:id="@+id/accomodationLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/accomodationImage"
+            android:text="location"
+            android:textColor="@color/text" />
+        <TextView
+            android:id="@+id/accomodationText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/accomodationLocation"
+            android:text="text"
+            android:textColor="@color/text_light" />
+        <TextView
+            android:id="@+id/accomodationPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/accomodationText"
+            android:text="price"
+            android:textColor="@color/text" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

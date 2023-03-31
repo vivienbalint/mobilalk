@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">vizbnb</string>
+    <string name="felfedezes">Felfedezés</string>
+    <string name="kedvencek">Kedvencek</string>
+    <string name="utazasok">Utazások</string>
+    <string name="profil">Profil</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login">Bejelentkezés</string>
+</resources>
