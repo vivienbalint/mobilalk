@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -15,19 +17,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         BottomNavigationView nav = findViewById(R.id.navigation);
         nav.setOnItemSelectedListener(navListener);
+        Fragment searchFragment = new SearchFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, searchFragment).commit();
     }
 
     private final BottomNavigationView.OnItemSelectedListener navListener = item -> {
-        // By using switch we can easily get
-        // the selected fragment
-        // by using there id.
         Fragment selectedFragment = null;
         int itemId = item.getItemId();
+        if (itemId == R.id.search) {
+            selectedFragment = new SearchFragment();
+        }
+        if (itemId == R.id.favorites) {
+            selectedFragment = new FavoritesFragment();
+        }
+        if (itemId == R.id.trips) {
+            selectedFragment = new TripsFragment();
+        }
         if (itemId == R.id.profile) {
             selectedFragment = new ProfileFragment();
         }
-        // It will help to replace the
-        // one fragment to other.
         if (selectedFragment != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
         }

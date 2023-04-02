@@ -5,6 +5,65 @@
     <string name="utazasok">Utazások</string>
     <string name="profil">Profil</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login">Bejelentkezés</string>
+    <string-array name="accomodation_city">
+        <item>Schladming</item>
+        <item>Nevidane</item>
+        <item>Firenze</item>
+        <item>Nedsaja</item>
+        <item>Superior, Montana</item>
+        <item>Ubud</item>
+        <item>Tulum</item>
+        <item>Chania</item>
+        <item>Huntsville</item>
+        <item>Paraty</item>
+    </string-array>
+    <string-array name="accomodation_country">
+        <item>Ausztria</item>
+        <item>Horvátország</item>
+        <item>Olaszország</item>
+        <item>Észtország</item>
+        <item>Egyesült Államok</item>
+        <item>Indonézia</item>
+        <item>Mexikó</item>
+        <item>Görögország</item>
+        <item>Kanada</item>
+        <item>Brazília</item>
+    </string-array>
+    <string-array name="accomodation_description">
+        <item>Im 62m² Apartment mit Sauna könnt ihr wunderbar zu viert wohnen. Inklusive Terrasse &amp; Balkon mit Dachsteinblick. Euer Frühstück mit regionalen Köstlichkeiten könnt ihr nach Lust &amp; Laune bestellen. </item>
+        <item>Bungalow with shared pool Fisherman\'s dream located in cozy little camp,on the south side of island Pašman, in bay called Soline.</item>
+        <item>casaBARTHEL is a perfect place for a vacation and an artist residency, immersed in the Tuscan landscape only 15\' from the Duomo and 30\' from Siena.</item>
+        <item>In the middle of beautiful pine forests there is a tiny house, an old farmplace. It has all the amenities you need for a peaceful retreat – silence, solitude, beautiful nature, a warm fireplace, sauna and starry nights.</item>
+        <item>Come enjoy the beauty, privacy and seclusion of Mountain View Villa at Alpine Falls Ranch, adjacent to the LoLo National Forest and steps away from the Clark Fork river.</item>
+        <item>Are you bored and tired of quarantine and longing for a new place and a new atmosphere to just break away for a couple of days, week or month? the megananda has the answer</item>
+        <item>This is a one of the kind loft: Awaking in soft sunlight between palms and trees and feeling the breeze from the ocean. </item>
+        <item>Nuzzled in a gorgeous setting, above the sun kissed beach of Georgioupolis in Crete, Minoas Villas captures the essence of chic and luxurious living only few minutes away from the shimmering sea. </item>
+        <item>Welcome to Muskoka A-frame, the perfect couple’s getaway or solo retreat, nestled in beautiful Hidden Valley.</item>
+        <item>Signature designed house inspired in the Ashaninka’s tribe architecture immersed in the rainforest with a private waterfall 300 meters away from your doorstep.</item>
+    </string-array>
+    <string-array name="accomodation_price">
+        <item>132000</item>
+        <item>102000</item>
+        <item>125000</item>
+        <item>49000</item>
+        <item>1700000</item>
+        <item>42000</item>
+        <item>270000</item>
+        <item>183000</item>
+        <item>94000</item>
+        <item>87000</item>
+    </string-array>
+    <array name="accomodation_image">
+        <item>@drawable/kep1</item>
+        <item>@drawable/kep2</item>
+        <item>@drawable/kep3</item>
+        <item>@drawable/kep4</item>
+        <item>@drawable/kep5</item>
+        <item>@drawable/kep6</item>
+        <item>@drawable/kep7</item>
+        <item>@drawable/kep8</item>
+        <item>@drawable/kep9</item>
+        <item>@drawable/kep10</item>
+    </array>
 </resources>
