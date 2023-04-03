@@ -6,6 +6,7 @@
     <string name="profil">Profil</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="login">Bejelentkezés</string>
+    <string name="search_hint"><font size="15">Hová utazol?</font></string>
     <string-array name="accomodation_city">
         <item>Schladming</item>
         <item>Nevidane</item>
@@ -66,4 +67,16 @@
         <item>@drawable/kep9</item>
         <item>@drawable/kep10</item>
     </array>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_with_google">Bejelentkezés Google-fiókkal</string>
 </resources>
