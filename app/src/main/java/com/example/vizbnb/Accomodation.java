@@ -1,15 +1,20 @@
 package com.example.vizbnb;
 
+import android.util.Log;
+
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 
 public class Accomodation {
+    private String id;
     private String city;
     private String country;
     private String description;
     private int price;
-    private final int image;
-    private HashSet<Date> bookedDates;
+    private int image;
+    private ArrayList<Date> bookedDates;
+
+    public Accomodation() {}
 
     public Accomodation(String city, String country, String description, int price, int image) {
         this.city = city;
@@ -17,8 +22,7 @@ public class Accomodation {
         this.description = description;
         this.price = price;
         this.image = image;
-        this.bookedDates = new HashSet<Date>() {
-        };
+        this.bookedDates = new ArrayList<>();
     }
 
     public String getCity() {
@@ -46,9 +50,16 @@ public class Accomodation {
     public int getImage() {
         return image;
     }
+    public String _getId() {
+        return id;
+    }
 
-    public HashSet<Date> getBookedDates() {
+    public ArrayList<Date> getBookedDates() {
         return bookedDates;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void addNewDate(Date date) throws Exception {

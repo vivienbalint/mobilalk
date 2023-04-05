@@ -22,8 +22,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
-
         BottomNavigationView nav = findViewById(R.id.navigation);
         nav.setOnItemSelectedListener(navListener);
         Fragment searchFragment = new SearchFragment();
@@ -32,16 +30,10 @@ public class MainActivity extends AppCompatActivity {
 
     private final BottomNavigationView.OnItemSelectedListener navListener = item -> {
         Fragment selectedFragment = null;
+        user = FirebaseAuth.getInstance().getCurrentUser();
         int itemId = item.getItemId();
         if (itemId == R.id.search) {
             selectedFragment = new SearchFragment();
-        }
-        if (itemId == R.id.favorites) {
-            if(user != null) {
-                selectedFragment = new FavoritesFragment();
-            } else {
-                selectedFragment = new LoginFragment();
-            }
         }
         if (itemId == R.id.trips) {
             if(user != null) {

@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="8dp"
     android:outlineProvider="none">
 
@@ -16,16 +17,6 @@
             android:adjustViewBounds="true"
             android:layout_alignParentTop="true"
             android:layout_marginBottom="10dp"/>
-
-        <ToggleButton
-            android:id="@+id/favoriteBtn"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/accomodationImage"
-            android:background="@drawable/ic_toggle"
-            android:textOff=""
-            android:textOn="" />
 
         <TextView
             android:id="@+id/accomodationLocation"
@@ -52,6 +43,16 @@
             android:layout_below="@+id/accomodationText"
             android:text="price"
             android:textColor="@color/text"
+            android:paddingTop="15dp"
             android:layout_marginBottom="10dp"/>
+        <Button
+            android:id="@+id/bookBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Foglald le"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/accomodationText"
+            app:backgroundTint="@color/dark_blue"
+            />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

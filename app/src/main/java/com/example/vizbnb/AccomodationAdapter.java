@@ -1,23 +1,30 @@
 package com.example.vizbnb;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -26,6 +33,7 @@ public class AccomodationAdapter extends RecyclerView.Adapter<AccomodationAdapte
     private ArrayList<Accomodation> accomodationsDataAll;
     private Context context;
     private int lastPosition = -1;
+    private FirebaseUser user;
 
     public AccomodationAdapter(Context context, ArrayList<Accomodation> accomodations) {
         this.accomodationsData = accomodations;
@@ -43,7 +51,7 @@ public class AccomodationAdapter extends RecyclerView.Adapter<AccomodationAdapte
         Accomodation currentAccomodation = accomodationsData.get(position);
         holder.bindTo(currentAccomodation);
 
-        if(holder.getAdapterPosition() > lastPosition) {
+        if (holder.getAdapterPosition() > lastPosition) {
             Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_in_row);
             holder.itemView.startAnimation(animation);
             lastPosition = holder.getAdapterPosition();
@@ -66,15 +74,14 @@ public class AccomodationAdapter extends RecyclerView.Adapter<AccomodationAdapte
             ArrayList<Accomodation> filteredList = new ArrayList<>();
             FilterResults results = new FilterResults();
 
-            if(charSequence == null || charSequence.length() == 0) {
+            if (charSequence == null || charSequence.length() == 0) {
                 results.count = accomodationsDataAll.size();
                 results.values = accomodationsDataAll;
             } else {
                 String filterPattern = charSequence.toString().toLowerCase().trim();
-                for(Accomodation accomodation : accomodationsDataAll) {
-                    if(accomodation.getCity().toLowerCase().contains(filterPattern)
-                            || accomodation.getCountry().toLowerCase().contains(filterPattern)
-                            || accomodation.getDescription().toLowerCase().contains(filterPattern)) {
+                for (Accomodation accomodation : accomodationsDataAll) {
+                    if (accomodation.getCity().toLowerCase().contains(filterPattern)
+                            || accomodation.getCountry().toLowerCase().contains(filterPattern)) {
                         filteredList.add(accomodation);
                     }
                 }
@@ -96,6 +103,7 @@ public class AccomodationAdapter extends RecyclerView.Adapter<AccomodationAdapte
         private TextView accomodationText;
         private TextView accomodationPrice;
         private ImageView accomodationImage;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -104,6 +112,7 @@ public class AccomodationAdapter extends RecyclerView.Adapter<AccomodationAdapte
             accomodationPrice = itemView.findViewById(R.id.accomodationPrice);
             accomodationImage = itemView.findViewById(R.id.accomodationImage);
         }
+
         public void bindTo(Accomodation currentAccomodation) {
             accomodationLocation.setText(currentAccomodation.getLocation());
             accomodationText.setText(currentAccomodation.getDescription());
@@ -112,6 +121,22 @@ public class AccomodationAdapter extends RecyclerView.Adapter<AccomodationAdapte
                     .load(currentAccomodation.getImage())
                     .transform(new RoundedCorners(140))
                     .into(accomodationImage);
+
+            user = FirebaseAuth.getInstance().getCurrentUser();
+
+            Button bookBtn = itemView.findViewById(R.id.bookBtn);
+
+            bookBtn.setOnClickListener(view -> {
+                FragmentManager fm = ((MainActivity) context).getSupportFragmentManager();
+                Fragment fragment;
+                if (user != null) {
+                    fragment = new BookFragment(currentAccomodation);
+                    fm.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                } else {
+                    fragment = new LoginFragment();
+                    fm.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                }
+            });
         }
     }
 }

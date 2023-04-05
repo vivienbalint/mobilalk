@@ -3,17 +3,19 @@ package com.example.vizbnb;
 import java.util.ArrayList;
 
 public class User {
+    private String id;
     private String email;
     private String firstName;
     private String lastName;
-    private ArrayList<Accomodation> favoriteAccomodations;
-    private ArrayList<Accomodation> bookedAccomodations;
+    private ArrayList<BookedAccomodation> bookedAccomodations;
+
+    public User() {
+    }
 
     public User(String email, String firstName, String lastName) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.favoriteAccomodations = new ArrayList<>();
         this.bookedAccomodations = new ArrayList<>();
     }
 
@@ -29,31 +31,25 @@ public class User {
         return lastName;
     }
 
-    public ArrayList<Accomodation> getFavoriteAccomodations() {
-        return favoriteAccomodations;
+    public ArrayList<BookedAccomodation> getBookedAccomodations() {
+        return bookedAccomodations;
     }
 
-    public ArrayList<Accomodation> getBookedAccomodations() {
-        return bookedAccomodations;
+    public String getId() {
+        return id;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public void addFavoriteAccomodation(Accomodation accomodation) {
-        favoriteAccomodations.add(accomodation);
+    public void setId(String id) {
+        this.id = id;
     }
-
-    public void removeFavoriteAccomodation(Accomodation accomodation) {
-        favoriteAccomodations.remove(accomodation);
-    }
-
-    public void addBookedAccomodation(Accomodation accomodation) {
+    public void addBookedAccomodation(BookedAccomodation accomodation) {
         bookedAccomodations.add(accomodation);
     }
 
-    public void removeBookedAccomodation(Accomodation accomodation) {
+    public void removeBookedAccomodation(BookedAccomodation accomodation) {
         bookedAccomodations.remove(accomodation);
     }
 }

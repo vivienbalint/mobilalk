@@ -2,12 +2,20 @@ package com.example.vizbnb;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -17,7 +25,8 @@ public class ProfileFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private FirebaseUser fbUser;
+    private FirebaseAuth auth;
+    private GoogleSignInClient googleSignInClient;
 
     // TODO: Rename and change types of parameters
     private User user;
@@ -52,13 +61,29 @@ public class ProfileFragment extends Fragment {
         if (getArguments() != null) {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        fbUser = FirebaseAuth.getInstance().getCurrentUser();
+        auth = FirebaseAuth.getInstance();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        Button registerBtn = view.findViewById(R.id.logoutBtn);
+        (registerBtn).setOnClickListener(this::logout);
+        return view;
     }
+
+    private void logout(View view) {
+        auth.signOut();
+//        googleSignInClient.signOut().addOnCompleteListener(getActivity(), task -> {
+////            Log.d("profile", auth.getCurrentUser().getEmail());
+//            Fragment loginFragment = new LoginFragment();
+//            getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, loginFragment).commit();
+//        });
+        Fragment loginFragment = new LoginFragment();
+        getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, loginFragment).commit();
+
+    }
+
 }

@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,6 +39,8 @@ public class RegisterFragment extends Fragment {
     private EditText lastName;
     private EditText password;
     private EditText passwordAgain;
+    private CollectionReference userCollection;
+    private FirebaseFirestore firestore;
 
     private FirebaseAuth auth;
 
@@ -79,6 +83,9 @@ public class RegisterFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register, container, false);
 
+        firestore = FirebaseFirestore.getInstance();
+        userCollection = firestore.collection("Users");
+
         Button registerBtn = view.findViewById(R.id.registerBtn);
         (registerBtn).setOnClickListener(this::register);
 
@@ -108,6 +115,8 @@ public class RegisterFragment extends Fragment {
                 .addOnCompleteListener(getActivity(), task -> {
             if(task.isSuccessful()) {
                 User user = new User(registerEmail, registerFirstName, registerLastName);
+                user.setId(auth.getUid());
+                userCollection.add(user);
                 Fragment profileFragment = new ProfileFragment(user);
                 getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, profileFragment).commit();
             } else {
