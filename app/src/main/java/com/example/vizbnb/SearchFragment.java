@@ -51,13 +51,14 @@ public class SearchFragment extends Fragment {
     private RecyclerView recyclerView;
     private ArrayList<Accomodation> accomodationList;
     private AccomodationAdapter adapter;
+    private NotificationHandler notificationHandler;
 
     private int queryLimit = 10;
 
-    private ToggleButton favoriteBtn;
-
     public SearchFragment() {
         // Required empty public constructor
+    }
+    public SearchFragment(NotificationHandler notificationHandler) {
     }
 
     /**
@@ -87,11 +88,11 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView = view.findViewById(R.id.searchRecyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
         accomodationList = new ArrayList<>();
 
-        adapter = new AccomodationAdapter(getContext(), accomodationList);
+        adapter = new AccomodationAdapter(getContext(), accomodationList, notificationHandler);
         recyclerView.setAdapter(adapter);
 
         firestore = FirebaseFirestore.getInstance();
@@ -125,7 +126,6 @@ public class SearchFragment extends Fragment {
             queryData();
         }
     };
-
     private void queryData() {
         accomodationList.clear();
 

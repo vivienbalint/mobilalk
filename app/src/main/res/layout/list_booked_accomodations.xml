@@ -10,45 +10,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/accomodationImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="10dp"/>
-
         <TextView
-            android:id="@+id/accomodationLocation"
+            android:id="@+id/bookedAccomodationLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/accomodationImage"
+            android:layout_alignParentTop="true"
             android:textColor="@color/text"
             android:layout_marginBottom="10dp"/>
 
         <TextView
-            android:id="@+id/accomodationText"
+            android:id="@+id/bookedAccomodationDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/accomodationLocation"
+            android:layout_below="@+id/bookedAccomodationLocation"
             android:textColor="@color/text_light"
             android:layout_marginBottom="10dp"/>
 
         <TextView
-            android:id="@+id/accomodationPrice"
+            android:id="@+id/bookedAccomodationPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/accomodationText"
+            android:layout_below="@+id/bookedAccomodationDate"
             android:textColor="@color/text"
             android:paddingTop="15dp"
             android:layout_marginBottom="10dp"/>
         <Button
-            android:id="@+id/bookBtn"
+            android:id="@+id/removeBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Foglald le"
+            android:text="Töröld a foglalást"
             android:layout_alignParentEnd="true"
-            android:layout_below="@+id/accomodationText"
+            android:layout_below="@+id/bookedAccomodationPrice"
             app:backgroundTint="@color/dark_blue"
             />
     </RelativeLayout>

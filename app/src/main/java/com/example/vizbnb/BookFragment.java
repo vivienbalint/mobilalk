@@ -3,6 +3,7 @@ package com.example.vizbnb;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 
@@ -14,6 +15,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,9 +56,13 @@ public class BookFragment extends Fragment {
     private TextView currentPrice;
     private TextView dateText;
     private ArrayList<Date> bookedDates = new ArrayList<>();
-    private ArrayList<BookedAccomodation> bookedAccomodations;
     private FirebaseUser user;
-    private List<String> listid = new ArrayList<>();
+    private Button bookBtn;
+    private Button datePickerBtn;
+    private int price;
+    private int numberOfDays;
+    private String dateString;
+    private NotificationHandler notificationHandler;
 
     public BookFragment(Accomodation accomodation) {
         this.accomodation = accomodation;
@@ -94,19 +101,21 @@ public class BookFragment extends Fragment {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
+        notificationHandler = new NotificationHandler(getContext());
+
         currentLocation = view.findViewById(R.id.currentLocation);
         currentText = view.findViewById(R.id.currentText);
         currentPrice = view.findViewById(R.id.currentPrice);
         dateText = view.findViewById(R.id.chosenDateText);
 
-        Button datePickerBtn = view.findViewById(R.id.datePickerBtn);
-        Button bookBtn = view.findViewById(R.id.currentBookBtn);
+        datePickerBtn = view.findViewById(R.id.datePickerBtn);
+        bookBtn = view.findViewById(R.id.currentBookBtn);
 
         bookBtn.setEnabled(false);
         bookBtn.setBackgroundColor(Color.LTGRAY);
 
         bookBtn.setOnClickListener(v -> createBooking());
-        setDate(datePickerBtn, bookBtn);
+        setDate();
 
         dateText.setText("Válassz dátumot!");
         currentLocation.setText(accomodation.getLocation());
@@ -116,7 +125,7 @@ public class BookFragment extends Fragment {
         return view;
     }
 
-    private void setDate(Button datePickerBtn, Button bookBtn) {
+    private void setDate() {
         MaterialDatePicker.Builder<Pair<Long, Long>> materialDateBuilder = MaterialDatePicker.Builder.dateRangePicker();
         materialDateBuilder.setTitleText("select date");
         final MaterialDatePicker<Pair<Long, Long>> materialDatePicker = materialDateBuilder.build();
@@ -126,7 +135,9 @@ public class BookFragment extends Fragment {
             bookBtn.setEnabled(true);
             bookBtn.setBackgroundColor(Color.parseColor("#FFC93C"));
             Pair<Long, Long> selectedDates = materialDatePicker.getSelection();
-            int numberOfDays = (int) TimeUnit.MILLISECONDS.toDays(selectedDates.second - selectedDates.first);
+            numberOfDays = (int) TimeUnit.MILLISECONDS.toDays(selectedDates.second - selectedDates.first);
+            price = accomodation.getPrice() * numberOfDays;
+            dateString = materialDatePicker.getHeaderText();
 
             Date dateStart = new Date(selectedDates.first);
             Date dateEnd = new Date(selectedDates.second);
@@ -139,8 +150,8 @@ public class BookFragment extends Fragment {
                 bookedDates.add(cal.getTime());
             }
 
-            dateText.setText("A választott intervallum: " + materialDatePicker.getHeaderText());
-            currentPrice.setText("Az utazás ára " + numberOfDays + " napra " + accomodation.getPrice() * numberOfDays + " Ft");
+            dateText.setText("A választott intervallum: " + dateString);
+            currentPrice.setText("Az utazás ára " + numberOfDays + " napra " + price + " Ft");
         });
     }
 
@@ -149,7 +160,7 @@ public class BookFragment extends Fragment {
         CollectionReference userCollection = FirebaseFirestore.getInstance().collection("Users");
         CollectionReference bookingCollection = FirebaseFirestore.getInstance().collection("Booked");
 
-        BookedAccomodation bookedAccomodation = new BookedAccomodation(accomodation._getId(), bookedDates);
+        BookedAccomodation bookedAccomodation = new BookedAccomodation(accomodation._getId(), user.getUid(), bookedDates, accomodation.getLocation(), price, numberOfDays, dateString);
 
         accomodationCollection.whereEqualTo(FieldPath.documentId(), accomodation._getId()).get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
@@ -164,16 +175,24 @@ public class BookFragment extends Fragment {
                 }
                 accomodationCollection.document(document.getId()).update("bookedDates", queryAccomodation.getBookedDates());
             }
-            userCollection.whereEqualTo("id", user.getUid()).get().addOnSuccessListener(queryDocumentSnapshots2 -> {
-                for (QueryDocumentSnapshot document : queryDocumentSnapshots2) {
-                    User queryUser = document.toObject(User.class);
-                    queryUser.addBookedAccomodation(bookedAccomodation);
-                    userCollection.document(document.getId()).update("bookedAccomodations", queryUser.getBookedAccomodations());
-                }
+
+            bookingCollection.add(bookedAccomodation).addOnCompleteListener(task -> {
+                String bookingId = task.getResult().getId();
+
+                userCollection.whereEqualTo("id", user.getUid()).get().addOnSuccessListener(queryDocumentSnapshots2 -> {
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots2) {
+                        User queryUser = document.toObject(User.class);
+                        queryUser.addBookedAccomodation(bookingId);
+                        userCollection.document(document.getId()).update("bookedAccomodations", queryUser.getBookedAccomodations());
+                    }
+                });
+
+                notificationHandler.send("Utazás sikeresen lefoglalva " + bookedAccomodation.getDateText() + " között, az alábbi helyszínen: " + bookedAccomodation.getLocation());
+
+                Toast.makeText(getContext(), "Utazás sikeresen lefoglalva!", Toast.LENGTH_LONG).show();
+                bookBtn.setEnabled(false);
+                bookBtn.setBackgroundColor(Color.LTGRAY);
             });
-            bookingCollection.add(bookedAccomodation);
         });
-//        Fragment tripsFragment = new TripsFragment();
-//        getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, tripsFragment).commit();
     }
 }

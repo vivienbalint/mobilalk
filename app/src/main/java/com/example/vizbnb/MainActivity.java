@@ -15,7 +15,6 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseUser user;
-    private final static String LOG_TAG = MainActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         nav.setOnItemSelectedListener(navListener);
         Fragment searchFragment = new SearchFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, searchFragment).commit();
+
     }
 
     private final BottomNavigationView.OnItemSelectedListener navListener = item -> {

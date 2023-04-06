@@ -89,7 +89,6 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
         email = view.findViewById(R.id.email);
@@ -141,7 +140,6 @@ public class LoginFragment extends Fragment {
         String loginPassword = password.getText().toString();
         auth.signInWithEmailAndPassword(loginEmail, loginPassword).addOnCompleteListener(getActivity(), task -> {
             if(task.isSuccessful()) {
-//                User user = new User(registerEmail, registerFirstName, registerLastName);
                 Fragment profileFragment = new ProfileFragment();
                 getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, profileFragment).commit();
             } else {

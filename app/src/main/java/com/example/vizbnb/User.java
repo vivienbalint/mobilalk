@@ -7,7 +7,7 @@ public class User {
     private String email;
     private String firstName;
     private String lastName;
-    private ArrayList<BookedAccomodation> bookedAccomodations;
+    private ArrayList<String> bookedAccomodations;
 
     public User() {
     }
@@ -31,25 +31,21 @@ public class User {
         return lastName;
     }
 
-    public ArrayList<BookedAccomodation> getBookedAccomodations() {
+    public ArrayList<String> getBookedAccomodations() {
         return bookedAccomodations;
     }
 
     public String getId() {
         return id;
     }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
     public void setId(String id) {
         this.id = id;
     }
-    public void addBookedAccomodation(BookedAccomodation accomodation) {
+    public void addBookedAccomodation(String accomodation) {
         bookedAccomodations.add(accomodation);
     }
 
-    public void removeBookedAccomodation(BookedAccomodation accomodation) {
+    public void removeBookedAccomodation(String accomodation) {
         bookedAccomodations.remove(accomodation);
     }
 }

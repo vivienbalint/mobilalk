@@ -28,17 +28,17 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
-public class AccomodationAdapter extends RecyclerView.Adapter<AccomodationAdapter.ViewHolder> implements Filterable {
+public class AccomodationAdapter extends RecyclerView.Adapter<AccomodationAdapter.ViewHolder> {
     private ArrayList<Accomodation> accomodationsData;
-    private ArrayList<Accomodation> accomodationsDataAll;
     private Context context;
     private int lastPosition = -1;
     private FirebaseUser user;
+    private NotificationHandler notificationHandler;
 
-    public AccomodationAdapter(Context context, ArrayList<Accomodation> accomodations) {
+    public AccomodationAdapter(Context context, ArrayList<Accomodation> accomodations, NotificationHandler notificationHandler) {
         this.accomodationsData = accomodations;
-        this.accomodationsDataAll = accomodations;
         this.context = context;
+        this.notificationHandler = notificationHandler;
     }
 
     @Override
@@ -51,10 +51,10 @@ public class AccomodationAdapter extends RecyclerView.Adapter<AccomodationAdapte
         Accomodation currentAccomodation = accomodationsData.get(position);
         holder.bindTo(currentAccomodation);
 
-        if (holder.getAdapterPosition() > lastPosition) {
+        if (holder.getBindingAdapterPosition() > lastPosition) {
             Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_in_row);
             holder.itemView.startAnimation(animation);
-            lastPosition = holder.getAdapterPosition();
+            lastPosition = holder.getBindingAdapterPosition();
         }
     }
 
@@ -62,41 +62,6 @@ public class AccomodationAdapter extends RecyclerView.Adapter<AccomodationAdapte
     public int getItemCount() {
         return accomodationsData.size();
     }
-
-    @Override
-    public Filter getFilter() {
-        return accomodationFilter;
-    }
-
-    private Filter accomodationFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence charSequence) {
-            ArrayList<Accomodation> filteredList = new ArrayList<>();
-            FilterResults results = new FilterResults();
-
-            if (charSequence == null || charSequence.length() == 0) {
-                results.count = accomodationsDataAll.size();
-                results.values = accomodationsDataAll;
-            } else {
-                String filterPattern = charSequence.toString().toLowerCase().trim();
-                for (Accomodation accomodation : accomodationsDataAll) {
-                    if (accomodation.getCity().toLowerCase().contains(filterPattern)
-                            || accomodation.getCountry().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(accomodation);
-                    }
-                }
-                results.count = filteredList.size();
-                results.values = filteredList;
-            }
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            accomodationsData = (ArrayList) filterResults.values;
-            notifyDataSetChanged();
-        }
-    };
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView accomodationLocation;
@@ -117,10 +82,8 @@ public class AccomodationAdapter extends RecyclerView.Adapter<AccomodationAdapte
             accomodationLocation.setText(currentAccomodation.getLocation());
             accomodationText.setText(currentAccomodation.getDescription());
             accomodationPrice.setText(currentAccomodation.getPriceString());
-            Glide.with(context)
-                    .load(currentAccomodation.getImage())
-                    .transform(new RoundedCorners(140))
-                    .into(accomodationImage);
+
+            Glide.with(context).load(currentAccomodation.getImage()).transform(new RoundedCorners(140)).into(accomodationImage);
 
             user = FirebaseAuth.getInstance().getCurrentUser();
 

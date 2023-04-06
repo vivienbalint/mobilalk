@@ -63,10 +63,8 @@ public class Accomodation {
     }
 
     public void addNewDate(Date date) throws Exception {
-        if (bookedDates.contains(date)) {
+        if(bookedDates.contains(date)) {
             throw new Exception("A kiválasztott dátumon nincs szabad szoba!");
-        } else {
-            bookedDates.add(date);
-        }
+        } else bookedDates.add(date);
     }
 }
