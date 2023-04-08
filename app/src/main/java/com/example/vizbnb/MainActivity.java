@@ -4,9 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
         nav.setOnItemSelectedListener(navListener);
         Fragment searchFragment = new SearchFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, searchFragment).commit();
-
     }
 
     private final BottomNavigationView.OnItemSelectedListener navListener = item -> {

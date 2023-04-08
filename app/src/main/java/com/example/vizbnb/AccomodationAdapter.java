@@ -1,16 +1,12 @@
 package com.example.vizbnb;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,10 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -33,12 +27,10 @@ public class AccomodationAdapter extends RecyclerView.Adapter<AccomodationAdapte
     private Context context;
     private int lastPosition = -1;
     private FirebaseUser user;
-    private NotificationHandler notificationHandler;
 
-    public AccomodationAdapter(Context context, ArrayList<Accomodation> accomodations, NotificationHandler notificationHandler) {
+    public AccomodationAdapter(Context context, ArrayList<Accomodation> accomodations) {
         this.accomodationsData = accomodations;
         this.context = context;
-        this.notificationHandler = notificationHandler;
     }
 
     @Override

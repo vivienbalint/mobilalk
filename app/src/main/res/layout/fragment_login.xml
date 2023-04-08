@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".LoginFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,11 +33,11 @@
             android:hint="Email-cím"
             android:inputType="textEmailAddress"
             app:layout_constraintBottom_toBottomOf="@id/password"
-            app:layout_constraintTop_toTopOf="@id/loginText"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintVertical_bias="0.6"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/loginText"
+            app:layout_constraintVertical_bias="0.6"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <EditText
             android:id="@+id/password"
@@ -47,36 +47,25 @@
             android:hint="Jelszó"
             android:inputType="textPassword"
             app:layout_constraintBottom_toBottomOf="@id/loginBtn"
-            app:layout_constraintTop_toTopOf="@id/email"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintVertical_bias="0.4"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/email"
+            app:layout_constraintVertical_bias="0.4"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <Button
             android:id="@+id/loginBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            app:backgroundTint="@color/dark_blue"
-            android:text="@string/login"
             android:paddingVertical="13dp"
+            android:text="@string/login"
+            app:backgroundTint="@color/dark_blue"
             app:layout_constraintBottom_toBottomOf="@id/orText"
             app:layout_constraintTop_toTopOf="@id/password"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintVertical_bias="0.4"/>
+            app:layout_constraintVertical_bias="0.4"
+            app:layout_constraintVertical_chainStyle="packed" />
 
-        <Button
-            android:id="@+id/loginWithGoogleBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            app:backgroundTint="@color/dark_blue"
-            android:text="@string/login_with_google"
-            android:paddingVertical="13dp"
-            app:layout_constraintBottom_toBottomOf="@id/orText"
-            app:layout_constraintTop_toTopOf="@id/loginBtn"
-            app:layout_constraintVertical_bias="0.4"/>
 
         <TextView
             android:id="@+id/orText"
@@ -86,15 +75,15 @@
             android:gravity="center"
             android:text="vagy"
             app:layout_constraintBottom_toBottomOf="@id/registerBtn"
-            app:layout_constraintTop_toTopOf="@id/loginWithGoogleBtn" />
+            app:layout_constraintTop_toTopOf="@id/loginBtn" />
 
         <Button
             android:id="@+id/registerBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:text="Regisztráció"
             android:paddingVertical="13dp"
+            android:text="Regisztráció"
             app:backgroundTint="@color/yellow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="@id/orText" />

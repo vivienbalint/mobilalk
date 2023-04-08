@@ -7,76 +7,29 @@ import android.content.IntentFilter;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ToggleButton;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
 
 public class SearchFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private FirebaseUser user;
-    private FirebaseAuth auth;
     private FirebaseFirestore firestore;
     private CollectionReference accomodationsCollection;
-
     private RecyclerView recyclerView;
     private ArrayList<Accomodation> accomodationList;
     private AccomodationAdapter adapter;
-    private NotificationHandler notificationHandler;
-
     private int queryLimit = 10;
 
     public SearchFragment() {
-        // Required empty public constructor
-    }
-    public SearchFragment(NotificationHandler notificationHandler) {
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SearchFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -88,11 +41,12 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
+
         recyclerView = view.findViewById(R.id.searchRecyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
         accomodationList = new ArrayList<>();
 
-        adapter = new AccomodationAdapter(getContext(), accomodationList, notificationHandler);
+        adapter = new AccomodationAdapter(getContext(), accomodationList);
         recyclerView.setAdapter(adapter);
 
         firestore = FirebaseFirestore.getInstance();
@@ -126,16 +80,17 @@ public class SearchFragment extends Fragment {
             queryData();
         }
     };
+
     private void queryData() {
         accomodationList.clear();
 
         accomodationsCollection.limit(queryLimit).get().addOnSuccessListener(queryDocumentSnapshots -> {
-            for(QueryDocumentSnapshot document : queryDocumentSnapshots) {
+            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                 Accomodation accomodation = document.toObject(Accomodation.class);
                 accomodation.setId(document.getId());
                 accomodationList.add(accomodation);
             }
-            if(accomodationList.size() == 0) {
+            if (accomodationList.size() == 0) {
                 initData();
                 queryData();
             }
@@ -150,7 +105,7 @@ public class SearchFragment extends Fragment {
         String[] accomodationPrice = getResources().getStringArray(R.array.accomodation_price);
         TypedArray accomodationImage = getResources().obtainTypedArray(R.array.accomodation_image);
 
-        for(int i = 0; i < accomodationCity.length; i++) {
+        for (int i = 0; i < accomodationCity.length; i++) {
             accomodationsCollection.add(new Accomodation(accomodationCity[i],
                     accomodationCountry[i],
                     accomodationDesc[i],

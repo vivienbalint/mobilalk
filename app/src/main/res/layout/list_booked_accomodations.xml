@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="8dp"
+    android:layout_margin="20dp"
     android:outlineProvider="none">
 
     <RelativeLayout
@@ -16,7 +16,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:textColor="@color/text"
-            android:layout_marginBottom="10dp"/>
+            android:textSize="20sp"
+            android:layout_marginBottom="10dp"
+            />
 
         <TextView
             android:id="@+id/bookedAccomodationDate"
@@ -24,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/bookedAccomodationLocation"
             android:textColor="@color/text_light"
+            android:textSize="15sp"
             android:layout_marginBottom="10dp"/>
 
         <TextView
@@ -41,7 +44,7 @@
             android:text="Töröld a foglalást"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/bookedAccomodationPrice"
-            app:backgroundTint="@color/dark_blue"
+            app:backgroundTint="@color/yellow"
             />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

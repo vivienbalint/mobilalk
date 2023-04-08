@@ -2,73 +2,47 @@ package com.example.vizbnb;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class ProfileFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     private FirebaseAuth auth;
-    private GoogleSignInClient googleSignInClient;
+    private FirebaseUser fbUser;
+    private TextView profileGreeting;
+    private TextView profileEmail;
 
-    // TODO: Rename and change types of parameters
-    private User user;
-    private String mParam2;
-
-    public ProfileFragment() {}
-    public ProfileFragment(User user) {
-        this.user = user;
+    public ProfileFragment() {
     }
-
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-//     * @return A new instance of fragment LoginFragment.
-//     */
-//    // TODO: Rename and change types and number of parameters
-//    public static ProfileFragment profileFragment(User user, String param2) {
-//        ProfileFragment fragment = new ProfileFragment();
-//        Bundle args = new Bundle();
-//        args.put
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-        auth = FirebaseAuth.getInstance();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        auth = FirebaseAuth.getInstance();
+        fbUser = auth.getCurrentUser();
+
+        profileGreeting = view.findViewById(R.id.profileGreeting);
+        profileEmail = view.findViewById(R.id.profileEmail);
+
+        findUser();
+
         Button registerBtn = view.findViewById(R.id.logoutBtn);
         (registerBtn).setOnClickListener(this::logout);
         return view;
@@ -76,14 +50,18 @@ public class ProfileFragment extends Fragment {
 
     private void logout(View view) {
         auth.signOut();
-//        googleSignInClient.signOut().addOnCompleteListener(getActivity(), task -> {
-////            Log.d("profile", auth.getCurrentUser().getEmail());
-//            Fragment loginFragment = new LoginFragment();
-//            getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, loginFragment).commit();
-//        });
         Fragment loginFragment = new LoginFragment();
         getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, loginFragment).commit();
-
     }
 
+    private void findUser() {
+        CollectionReference userCollection = FirebaseFirestore.getInstance().collection("Users");
+        userCollection.whereEqualTo("id", fbUser.getUid()).get().addOnSuccessListener(queryDocumentSnapshots2 -> {
+            for (QueryDocumentSnapshot document : queryDocumentSnapshots2) {
+                User user = document.toObject(User.class);
+                profileGreeting.setText("Üdv, " + user.getFirstName() + "!");
+                profileEmail.setText(user.getEmail());
+            }
+        });
+    }
 }

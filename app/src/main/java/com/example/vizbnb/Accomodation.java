@@ -1,7 +1,5 @@
 package com.example.vizbnb;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -13,8 +11,8 @@ public class Accomodation {
     private int price;
     private int image;
     private ArrayList<Date> bookedDates;
-
-    public Accomodation() {}
+    public Accomodation() {
+    }
 
     public Accomodation(String city, String country, String description, int price, int image) {
         this.city = city;
@@ -45,11 +43,14 @@ public class Accomodation {
         return price;
     }
 
-    public String getPriceString() { return price + " Ft/nap"; }
+    public String getPriceString() {
+        return price + " Ft/nap";
+    }
 
     public int getImage() {
         return image;
     }
+
     public String _getId() {
         return id;
     }
@@ -63,7 +64,7 @@ public class Accomodation {
     }
 
     public void addNewDate(Date date) throws Exception {
-        if(bookedDates.contains(date)) {
+        if (bookedDates.contains(date)) {
             throw new Exception("A kiválasztott dátumon nincs szabad szoba!");
         } else bookedDates.add(date);
     }
