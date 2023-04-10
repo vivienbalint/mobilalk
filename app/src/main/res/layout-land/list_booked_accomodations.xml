@@ -3,53 +3,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginBottom="70dp"
     android:outlineProvider="none">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/accomodationImage"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/bookedAccomodationLocation"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginBottom="10dp"
-            android:adjustViewBounds="true" />
+            android:textColor="@color/text"
+            android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/accomodationLocation"
+            android:id="@+id/bookedAccomodationDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/accomodationImage"
+            android:layout_below="@+id/bookedAccomodationLocation"
             android:layout_marginBottom="10dp"
-            android:textColor="@color/text" />
+            android:textColor="@color/text_light"
+            android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/accomodationText"
+            android:id="@+id/bookedAccomodationPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/accomodationLocation"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/text_light" />
-
-        <TextView
-            android:id="@+id/accomodationPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/accomodationText"
+            android:layout_below="@+id/bookedAccomodationDate"
             android:layout_marginBottom="10dp"
             android:paddingTop="15dp"
             android:textColor="@color/text" />
 
         <Button
-            android:id="@+id/bookBtn"
+            android:id="@+id/removeBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/accomodationText"
+            android:layout_below="@+id/bookedAccomodationPrice"
             android:layout_alignParentEnd="true"
-            android:text="Foglald le"
-            app:backgroundTint="@color/dark_blue" />
+            android:text="Töröld a foglalást"
+            app:backgroundTint="@color/yellow" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

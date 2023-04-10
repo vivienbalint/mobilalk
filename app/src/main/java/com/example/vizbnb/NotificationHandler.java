@@ -1,6 +1,5 @@
 package com.example.vizbnb;
 
-import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -15,14 +14,13 @@ public class NotificationHandler {
     private final int NOTIFICATION_ID = 12;
     private NotificationManager manager;
     private Context context;
-
     public NotificationHandler(Context context) {
         this.context = context;
         this.manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         createChannel();
     }
 
-    private void createChannel() {
+    public void createChannel() {
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return;
         NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Trip Notification", NotificationManager.IMPORTANCE_DEFAULT);
         channel.enableVibration(true);
@@ -32,7 +30,7 @@ public class NotificationHandler {
 
     public void send(String message) {
         Intent intent = new Intent(context, MainActivity.class);
-        @SuppressLint("UnspecifiedImmutableFlag") PendingIntent pendingIntent = PendingIntent.getActivity(context, 12, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 12, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle("VizBnB")

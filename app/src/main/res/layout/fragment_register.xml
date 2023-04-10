@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".RegisterFragment">
 
     <LinearLayout
@@ -52,6 +52,7 @@
             android:layout_margin="20dp"
             android:hint="Jelszó"
             android:inputType="textPassword" />
+
         <EditText
             android:id="@+id/registerPasswordAgain"
             android:layout_width="match_parent"
@@ -65,9 +66,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            app:backgroundTint="@color/yellow"
+            android:paddingVertical="13dp"
             android:text="Regisztráció"
-            android:paddingVertical="13dp" />
+            app:backgroundTint="@color/yellow" />
 
     </LinearLayout>
 

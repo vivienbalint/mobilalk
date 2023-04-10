@@ -1,13 +1,16 @@
 package com.example.vizbnb;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,29 +18,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
-import org.checkerframework.checker.units.qual.A;
-import org.w3c.dom.Text;
-
-import java.sql.Time;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class BookFragment extends Fragment {
@@ -156,12 +146,24 @@ public class BookFragment extends Fragment {
                     }
                 });
 
-                notificationHandler.send("Utazás sikeresen lefoglalva " + bookedAccomodation.getDateText() + " között, az alábbi helyszínen: " + bookedAccomodation.getLocation());
+                sendNotification(bookedAccomodation);
 
                 Toast.makeText(getContext(), "Utazás sikeresen lefoglalva!", Toast.LENGTH_LONG).show();
                 bookBtn.setEnabled(false);
                 bookBtn.setBackgroundColor(Color.LTGRAY);
             });
         });
+    }
+
+    private void sendNotification(BookedAccomodation bookedAccomodation) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
+            } else {
+                notificationHandler.createChannel();
+                notificationHandler.send("Utazás sikeresen lefoglalva " + bookedAccomodation.getDateText() + " között, az alábbi helyszínen: " + bookedAccomodation.getLocation());
+            }
+        } else
+            notificationHandler.send("Utazás sikeresen lefoglalva " + bookedAccomodation.getDateText() + " között, az alábbi helyszínen: " + bookedAccomodation.getLocation());
     }
 }

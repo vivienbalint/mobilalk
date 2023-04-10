@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginHorizontal="20dp"
+    android:paddingVertical="20dp"
+    android:layout_marginBottom="80dp"
     android:outlineProvider="none">
 
     <RelativeLayout
@@ -12,10 +14,10 @@
 
         <ImageView
             android:id="@+id/accomodationImage"
-            android:layout_width="match_parent"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginBottom="10dp"
+            android:paddingBottom="10dp"
             android:adjustViewBounds="true" />
 
         <TextView
@@ -23,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/accomodationImage"
-            android:layout_marginBottom="10dp"
+            android:paddingBottom="10dp"
             android:textColor="@color/text" />
 
         <TextView
@@ -31,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/accomodationLocation"
-            android:layout_marginBottom="10dp"
+            android:paddingBottom="10dp"
             android:textColor="@color/text_light" />
 
         <TextView
@@ -39,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/accomodationText"
-            android:layout_marginBottom="10dp"
+            android:paddingBottom="10dp"
             android:paddingTop="15dp"
             android:textColor="@color/text" />
 
