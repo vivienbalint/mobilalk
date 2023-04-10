@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="20dp"
     android:paddingVertical="20dp"
-    android:layout_marginBottom="80dp"
+    android:layout_marginBottom="70dp"
     android:outlineProvider="none">
 
     <RelativeLayout
